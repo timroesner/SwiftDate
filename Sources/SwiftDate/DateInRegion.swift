@@ -255,23 +255,23 @@ public class DateInRegion: CustomStringConvertible, Codable {
 
 	public required init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
-        absoluteDate = try values.decode(Date.self, forKey: .date)
+		absoluteDate = try values.decode(Date.self, forKey: .date)
         
-        if let tzIdentifier = try? values.decode(String.self, forKey: .tz),
-           let tz = TimeZone(identifier: tzIdentifier) {
-			   region = Region(tz: tz, cal: Calendar.current, loc: Locale.current)
-       	} else {
-            let offset = try values.decode(Int.self, forKey: .gmtOffset)
-            let timeZone = TimeZone(secondsFromGMT: offset)!
-            region = Region(tz: timeZone, cal: Calendar.current, loc: Locale.current)
-        }
-    	formatters = Formatters(region: region)
+		if let tzIdentifier = try? values.decode(String.self, forKey: .tz),
+			let tz = TimeZone(identifier: tzIdentifier) {
+				region = Region(tz: tz, cal: Calendar.current, loc: Locale.current)
+		} else {
+			let offset = try values.decode(Int.self, forKey: .gmtOffset)
+			let timeZone = TimeZone(secondsFromGMT: offset)!
+			region = Region(tz: timeZone, cal: Calendar.current, loc: Locale.current)
+		}
+		formatters = Formatters(region: region)
 	}
 
 	public func encode(to encoder: Encoder) throws {
 	    var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(absoluteDate, forKey: .date)
-        try container.encode(region.timeZone.identifier, forKey: .tz)
+		try container.encode(absoluteDate, forKey: .date)
+		try container.encode(region.timeZone.identifier, forKey: .tz)
 	}
 	
 	/// Convert a `DateInRegion` instance to a new specified `Region`
