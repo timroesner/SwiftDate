@@ -1,7 +1,7 @@
 // COLLOQUIAL STRINGD
 "colloquial_f_y"					=	"nächstes Jahr";		// year,future,singular: 	"next year"
 "colloquial_f_yy"					=	"in %d";			// year,future,plural:		"on 2016"
-"colloquial_p_y"					=	"letztes JAHR";		// year,past,singular:		"last year"
+"colloquial_p_y"					=	"letztes Jahr";		// year,past,singular:		"last year"
 "colloquial_p_yy"					=	"%d";				// year,past,plural:		"2015"
 
 "colloquial_f_m"					=	"nächster Monat";		// month,future,singular:	"next month"
