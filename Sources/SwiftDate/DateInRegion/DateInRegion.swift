@@ -186,13 +186,11 @@ public struct DateInRegion: DateRepresentable, Decodable, Encodable, CustomStrin
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         date = try values.decode(Date.self, forKey: .date)
-
-        if let region = try? values.decode(Region.self, forKey: .region) {
-            self.region = region
+        
+        if let tzIdentifier = try? values.decode(String.self, forKey: .tz), let tz = TimeZone(identifier: tzIdentifier) {
+            self.region = Region(zone: tz)
         } else {
-            let tzIdentifier = try values.decode(String.self, forKey: .tz)
-            let tz = TimeZone(identifier: tzIdentifier)!
-            region = Region(zone: tz)
+            self.region = try values.decode(Region.self, forKey: .region)
         }
     }
     
