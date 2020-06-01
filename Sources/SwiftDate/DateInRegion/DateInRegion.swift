@@ -180,6 +180,25 @@ public struct DateInRegion: DateRepresentable, Decodable, Encodable, CustomStrin
 	enum CodingKeys: String, CodingKey {
 		case date
 		case region
+        case tz
 	}
+    
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        date = try values.decode(Date.self, forKey: .date)
 
+        if let region = try? values.decode(Region.self, forKey: .region) {
+            self.region = region
+        } else {
+            let tzIdentifier = try values.decode(String.self, forKey: .tz)
+            let tz = TimeZone(identifier: tzIdentifier)
+            region = Region(zone: tz)
+        }
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(date, forKey: .date)
+        try container.encode(region, forKey: .region)
+    }
 }
