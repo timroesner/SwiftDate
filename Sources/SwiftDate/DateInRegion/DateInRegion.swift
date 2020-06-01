@@ -191,7 +191,7 @@ public struct DateInRegion: DateRepresentable, Decodable, Encodable, CustomStrin
             self.region = region
         } else {
             let tzIdentifier = try values.decode(String.self, forKey: .tz)
-            let tz = TimeZone(identifier: tzIdentifier)
+            let tz = TimeZone(identifier: tzIdentifier)!
             region = Region(zone: tz)
         }
     }
